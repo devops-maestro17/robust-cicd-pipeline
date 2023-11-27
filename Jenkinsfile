@@ -1,4 +1,6 @@
 def registry = 'https://vigilantfiesta.jfrog.io'
+def imageName = 'vigilantfiesta.jfrog.io/java-app-docker/java-app'
+def version = '2.1.2'
 
 pipeline{
     agent{
@@ -69,6 +71,26 @@ pipeline{
                     buildInfo.env.collect()
                     server.publishBuildInfo(buildInfo)
                     echo "----------------Jar Publish Completed-----------------------"
+                }
+            }
+        }
+        stage("Docker Build"){
+            steps{
+                script{
+                    echo '<--------------- Docker Build Started --------------->'
+                    app = docker.build(imageName+":"+version)
+                    echo '<--------------- Docker Build Ends --------------->'
+                }
+            }
+        }
+        stage("Docker publish"){
+            steps{
+                script{
+                    echo '<--------------- Docker Publish Started --------------->'  
+                    docker.withRegistry(registry, 'artifact-cred'){
+                        app.push()
+                    }    
+                    echo '<--------------- Docker Publish Completed --------------->'  
                 }
             }
         }
