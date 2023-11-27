@@ -1,0 +1,13 @@
+[jenkins-master]
+# ip address of master
+
+[jenkins-master:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=<path of the pem file>
+
+[jenkins-slave]
+# ip address of slave
+
+[jenkins-slave:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=<path of the pem file>
