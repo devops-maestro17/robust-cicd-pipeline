@@ -1,12 +1,4 @@
 ---
-- hosts: jenkins-master
-  become: true 
-  tasks: 
-  - name: add jenkins key 
-    apt_key: 
-      url:  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-root@ip-10-1-1-128:/home/ubuntu/ansible-playbooks# cat slave-setup.yml 
----
 - hosts: jenkins-slave
   become: true 
   tasks: 
