@@ -1,6 +1,6 @@
 def registry = 'https://vigilantfiesta.jfrog.io'
 def imageName = 'vigilantfiesta.jfrog.io/java-app-docker-local/java-app'
-def version = '1.0.2'
+def version = '1.0.3'
 
 pipeline{
     agent{
@@ -96,12 +96,12 @@ pipeline{
         // }
         stage("Deploy to K8s using Helm"){
             environment{
-                CHART_VALUE = '0.1.3'
+                CHART_VALUE = '0.1.4'
             }
             steps{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
-                    // sh 'helm package /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart'
+                    sh 'helm package /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart'
                     sh 'helm install java-app-chart /home/ubuntu/jenkins/workspace/cicd-pipeline/java-app-chart-${CHART_VALUE}.tgz'
 
                 }
