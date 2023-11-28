@@ -1,2 +1,2 @@
-./target/*
+/target/*
 ./helm-charts/*.tgz
