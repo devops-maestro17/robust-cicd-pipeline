@@ -16,7 +16,7 @@ spec:
       - name: jfrogcred 
       containers:
       - name:  java-app
-        image: vigilantfiesta.jfrog.io/java-app-docker/java-app:2.1.2
+        image: vigilantfiesta.jfrog.io/java-app-docker/java-app:1.0.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
