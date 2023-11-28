@@ -99,8 +99,7 @@ pipeline{
             steps{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
-                    echo "present working directory"
-                    sh 'pwd'
+                    sh 'cd helm-charts'
                     sh 'ls'
                     // sh 'cd /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts'
                     // sh 'helm package java-app-chart'
