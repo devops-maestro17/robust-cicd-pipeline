@@ -28,28 +28,28 @@ pipeline{
                 echo "------------Unit test completed------------"
             }
         }
-        // stage ("Sonarqube Analysis"){
-        //     environment{
-        //         scannerHome = tool 'sonar-scanner'
-        //     }
-        //     steps{
-        //         withSonarQubeEnv('sonar-server'){
-        //             sh '${scannerHome}/bin/sonar-scanner'
-        //         }
-        //     }
-        // }
-        // stage ("Quality Gate"){
-        //     steps{
-        //         script{
-        //             timeout(time: 1, unit: 'HOURS'){
-        //                 def qg = waitForQualityGate()
-        //                 if (qg.status != 'OK'){
-        //                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage ("Sonarqube Analysis"){
+            environment{
+                scannerHome = tool 'sonar-scanner'
+            }
+            steps{
+                withSonarQubeEnv('sonar-server'){
+                    sh '${scannerHome}/bin/sonar-scanner'
+                }
+            }
+        }
+        stage ("Quality Gate"){
+            steps{
+                script{
+                    timeout(time: 1, unit: 'HOURS'){
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK'){
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
         stage ("Publish Jar to JFrog Artifactory"){
             steps{
                 script{
@@ -94,5 +94,14 @@ pipeline{
                 }
             }
         }
+        // stage("Deploy to K8s using Helm"){
+        //     steps{
+        //         script{
+        //             echo "----------------Helm Deployment Started----------------------"
+        //             sh 'helm install java-app java-app-0.1.1.tgz'
+
+        //         }
+        //     }
+        // }
     }
 }
