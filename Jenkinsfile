@@ -99,8 +99,7 @@ pipeline{
             steps{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
-                    sh 'cd helm-charts'
-                    sh 'ls'
+                    sh 'cat /helm-charts/java-app-chart/Chart.yaml'
                     // sh 'cd /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts'
                     // sh 'helm package java-app-chart'
                     // sh 'helm install java-app ./java-app-${chartValue}.tgz'
