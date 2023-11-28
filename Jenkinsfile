@@ -1,7 +1,6 @@
 def registry = 'https://vigilantfiesta.jfrog.io'
 def imageName = 'vigilantfiesta.jfrog.io/java-app-docker-local/java-app'
 def version = '1.0.2'
-def chartValue = '0.1.3'
 
 pipeline{
     agent{
@@ -12,6 +11,7 @@ pipeline{
 
     environment {
         PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
+        chartValue = '0.1.3'
     }
 
     stages{
@@ -100,7 +100,8 @@ pipeline{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
                     // sh 'helm package /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart'
-                    sh 'helm install /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart .java-app-chart-${chartValue}.tgz'
+                    echo 'helm install ${chartValue}'
+                    // sh 'helm install /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart .java-app-chart-${chartValue}.tgz'
 
                 }
             }
