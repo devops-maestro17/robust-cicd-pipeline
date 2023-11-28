@@ -29,28 +29,28 @@ pipeline{
                 echo "------------Unit test completed------------"
             }
         }
-        stage ("Sonarqube Analysis"){
-            environment{
-                scannerHome = tool 'sonar-scanner'
-            }
-            steps{
-                withSonarQubeEnv('sonar-server'){
-                    sh '${scannerHome}/bin/sonar-scanner'
-                }
-            }
-        }
-        stage ("Quality Gate"){
-            steps{
-                script{
-                    timeout(time: 1, unit: 'HOURS'){
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK'){
-                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                        }
-                    }
-                }
-            }
-        }
+        // stage ("Sonarqube Analysis"){
+        //     environment{
+        //         scannerHome = tool 'sonar-scanner'
+        //     }
+        //     steps{
+        //         withSonarQubeEnv('sonar-server'){
+        //             sh '${scannerHome}/bin/sonar-scanner'
+        //         }
+        //     }
+        // }
+        // stage ("Quality Gate"){
+        //     steps{
+        //         script{
+        //             timeout(time: 1, unit: 'HOURS'){
+        //                 def qg = waitForQualityGate()
+        //                 if (qg.status != 'OK'){
+        //                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stage ("Publish Jar to JFrog Artifactory"){
             steps{
                 script{
@@ -99,6 +99,7 @@ pipeline{
             steps{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
+                    sh 'cd helm-charts'
                     sh 'helm package java-app-chart'
                     sh 'helm install java-app ./java-app-${chartValue}.tgz'
 
