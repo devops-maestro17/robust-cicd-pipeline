@@ -11,7 +11,6 @@ pipeline{
 
     environment {
         PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
-        chartValue = '0.1.3'
     }
 
     stages{
@@ -96,11 +95,14 @@ pipeline{
         //     }
         // }
         stage("Deploy to K8s using Helm"){
+            environment{
+                CHART_VALUE = '0.1.3'
+            }
             steps{
                 script{
                     echo "----------------Helm Deployment Started----------------------"
                     // sh 'helm package /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart'
-                    echo 'helm install ${chartValue}'
+                    echo 'helm install ${CHART_VALUE}'
                     // sh 'helm install /home/ubuntu/jenkins/workspace/cicd-pipeline/helm-charts/java-app-chart .java-app-chart-${chartValue}.tgz'
 
                 }
