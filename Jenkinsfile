@@ -1,6 +1,7 @@
 def registry = 'https://vigilantfiesta.jfrog.io'
 def imageName = 'vigilantfiesta.jfrog.io/java-app-docker-local/java-app'
-def version = '1.0.0'
+def version = '1.0.1'
+def chartValue = '0.1.2'
 
 pipeline{
     agent{
@@ -94,14 +95,15 @@ pipeline{
                 }
             }
         }
-        // stage("Deploy to K8s using Helm"){
-        //     steps{
-        //         script{
-        //             echo "----------------Helm Deployment Started----------------------"
-        //             sh 'helm install java-app java-app-0.1.1.tgz'
+        stage("Deploy to K8s using Helm"){
+            steps{
+                script{
+                    echo "----------------Helm Deployment Started----------------------"
+                    sh 'helm package java-app-chart'
+                    sh 'helm install java-app ./java-app-${chartValue}.tgz'
 
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
     }
 }
