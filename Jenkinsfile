@@ -1,7 +1,7 @@
 def registry = 'https://vigilantfiesta.jfrog.io'
 def imageName = 'vigilantfiesta.jfrog.io/java-app-docker-local/java-app'
-def version = '1.0.1'
-def chartValue = '0.1.2'
+def version = '1.0.2'
+def chartValue = '0.1.3'
 
 pipeline{
     agent{

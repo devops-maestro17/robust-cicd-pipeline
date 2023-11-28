@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.valaxy</groupId>
 	<artifactId>demo-workshop</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>demo-workshop</name>
 	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
