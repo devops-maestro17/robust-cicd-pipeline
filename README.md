@@ -32,3 +32,4 @@ The pipeline consists of the following steps:
 
 - GitHub Webhook Integration: The pipeline is integrated with GitHub webhook, which allows the pipeline to be triggered automatically whenever any code changes are made to the GitHub repo. The webhook sends a notification to Jenkins, which then starts the pipeline execution. This ensures that the pipeline is always up to date with the latest code changes and the application is always in sync with the source code.
 
+### Terraform is used to build the custom VPC with servers to host Ansible, Jenkins master and build slave on AWS. Ansible is used to manage the configuration on the Jenkins and build servers by installing required packages using Ansible playbooks.
