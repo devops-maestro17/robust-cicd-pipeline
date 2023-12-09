@@ -17,19 +17,36 @@ The following tools and technologies are used in this project:
 - Kubernetes - Deploy the application
 
 
-## Pipeline Overview
-The pipeline consists of the following steps:
+## Infrastructure Setup
 
-- Build: The pipeline starts with the build process using Maven and performs unit testing. The build process generates a JAR file as the artifact for the application.
+The infrastructure is created using Terraform, which sets up a custom VPC on AWS with public subnets. Inside these subnets, three servers are hosted:
+1. Ansible Server
+2. Jenkins Master Server
+3. Build Slave Server
 
-- Static Code Analysis: The pipeline performs static code analysis using SonarQube and checks the quality of the code. The pipeline passes only if the code meets the quality gates defined by SonarQube.
+Ansible acts as the configuration management tool for the Jenkins master and build slave servers, installing the required packages on these servers.
 
-- Containerization: The pipeline containerizes the artifact using Docker and creates a Docker image for the application. The Docker image is then pushed to JFrog Artifactory, which acts as a registry for storing the images.
+## CI/CD Pipeline
 
-- Packaging: The pipeline packages the Kubernetes manifests using Helm and creates a Helm chart for the application. The Helm chart is then used to deploy the application to Elastic Kubernetes Service (EKS) cluster.
+The Jenkins server connects with the build slave server to manage the build process for the application. The pipeline is integrated with GitHub webhooks, triggering automatically whenever code changes are pushed.
 
-- Deployment: The pipeline deploys the application to EKS cluster using Helm. The pipeline verifies the status of the deployment and reports the success or failure of the pipeline.
+### Build Process
 
-- GitHub Webhook Integration: The pipeline is integrated with GitHub webhook, which allows the pipeline to be triggered automatically whenever any code changes are made to the GitHub repo. The webhook sends a notification to Jenkins, which then starts the pipeline execution. This ensures that the pipeline is always up to date with the latest code changes and the application is always in sync with the source code.
+The pipeline starts with the build process using Maven, which also performs unit testing. The build process generates a JAR file as the artifact for the application.
 
-### Terraform is used to build the custom VPC with servers to host Ansible, Jenkins master and build slave on AWS. Ansible is used to manage the configuration on the Jenkins and build servers by installing required packages using Ansible playbooks.
+### Static Code Analysis
+
+The pipeline then performs static code analysis using SonarQube, checking the quality of the code. The pipeline passes only if the code meets the quality gates defined by SonarQube.
+
+### Dockerization
+
+The pipeline containerizes the artifact using Docker, creating a Docker image for the application. This Docker image is then pushed to JFrog Artifactory, which acts as a registry for storing the images.
+
+### Deployment
+
+The pipeline packages the Kubernetes manifests using Helm, creating a Helm chart for the application. This Helm chart is then used to deploy the application to an Elastic Kubernetes Service (EKS) cluster. The EKS cluster is created using eksctl and AWS CLI.
+
+## Conclusion
+
+This project successfully creates a robust and efficient CI/CD pipeline for a Java Spring Boot application, leveraging various DevOps tools and technologies.
+
